@@ -1,8 +1,47 @@
 body {
-    background-color: blue;
+    background-color: rgb(187, 211, 172);
+    
+}
+
+#indexForm {
+    margin-left: auto;
+    margin-right: auto;    
+    width: 80%;
+}
+
+#errorMsg{
+    color: red;
 }
 
 li a{
     display: block;
     width: 60px;
     }
+
+#asideTable {
+    display: block;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: aliceblue;
+    box-shadow: 20px;
+    margin: 5px;
+    padding: 10px;    
+    float: left;
+}
+#asideForm {
+    margin: 5px;
+}
+
+#dataTable {
+    display: block;
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: aliceblue;
+    margin: 5px;
+    padding: 5px;    
+    float: left;
+    width: 75%;
+    min-height: 200px;
+}
