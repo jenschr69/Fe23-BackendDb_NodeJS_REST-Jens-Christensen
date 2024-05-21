@@ -6,7 +6,7 @@ const pool = mysql.createPool({
     host: 'localhost',
     port: '3306',
     user: 'root',
-    password: '',
+    password: 'mysql',
     database: 'gritacademy',
     waitForConnections: true,
     connectionLimit: 10,
