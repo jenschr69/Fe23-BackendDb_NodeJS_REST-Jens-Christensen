@@ -25,20 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 ////////////////Routing
-
-app.get('/', async (req, res) => {
-    //res.send("hello World");//serves index.html
-    const pageTitle = "Dynamic webpage";
-    const sql = 'SHOW tables';
-    const dbData = await db.query(sql);
-    console.log(dbData);
-    res.render('index', {pageTitle, dbData} );
-});
-app.get('/exempel', async (req, res) => {
-    //res.send("hello World");//serves index.html
-    //
-    let cols = ["first","second","one","4","c"]
-    let buildQuery = (cols) => {
+function buildData(cols){
         let colQuery = "";
         for (let i = 0; i < cols.length; i++) {
             if(i<cols.length-1){    
@@ -47,31 +34,61 @@ app.get('/exempel', async (req, res) => {
                 colQuery+=cols[i]
             }     
         }
-        let queryStart = "INSERT INTO(" + colQuery + ") WHERE fdsaf";
-        console.log(queryStart);
+        return colQuery;
     }
-    buildQuery(cols);
 
-    //
-    const pageTitle = "Dynamic webpage";
-    const sql = 'SHOW tables';
+async function insertInto(data){
+    const sql = `INSERT INTO ${data.tableName} (${buildData(data.columnNames)}) VALUES (${buildData(data.columnValues)})`;
     const dbData = await db.query(sql);
-    console.log(dbData);
-    res.render('index', {pageTitle, dbData} );
+}
+
+async function getTables(){
+    const sql = 'SHOW tables';
+    const dbTables = await db.query(sql);
+    return dbTables
+}
+
+app.get('/', async (req, res) => {
+    //res.send("hello World");//serves index.html
+    const pageTitle = "Dynamic webpage";
+    const dbTables = await getTables();
+    let errorMsg = "";
+    let tableName = "select table";
+    res.render('index', {pageTitle,tableName, dbTables, errorMsg} );
 });
 
 let currentTable;
 app.post('/', async (req, res) => {
-    //res.send("hello World");//serves index.html
-    //getting input data from the form
     console.log(req.body);
-    const tableName = req.body;
+    const dbTables = await getTables();
+    //getting input data from the form
     const pageTitle = "Dynamic webpage";
-    const sql = `SELECT * FROM ${tableName.table_name}`;
-    currentTable = tableName.table_name
-    const dbData = await db.query(sql);
-    console.log(dbData);
-    res.render('index', {pageTitle, dbData} );
+    //remove row
+    if(req.body.delRowBtn){
+        await db.query(`DELETE FROM ${req.body.delRowBtn.split(",")[0]} WHERE id=${req.body.delRowBtn.split(",")[1]}`);
+    }
+
+    //show data
+  
+
+    let errorMsg = "";
+    let tableName = "";
+    let dbData=[];
+    if(req.body.tableAsideBtn){
+        let tableName = req.body.tableAsideBtn;
+        let sql = `SELECT * FROM ${req.body.tableAsideBtn}`;
+        dbData = await db.query(sql);
+        res.render('index', {pageTitle,tableName, dbData, dbTables, errorMsg});
+    }else if(req.body.delRowBtn){
+        let tableName = req.body.delRowBtn.split(",")[0];
+        let sql = `SELECT * FROM ${req.body.delRowBtn.split(",")[0]}`;
+        dbData = await db.query(sql);
+        res.render('index', {pageTitle,tableName, dbData, dbTables, errorMsg});
+    }else{
+        errorMsg = "table name missing";
+        dbData = [{}];
+        res.render('index', {pageTitle,tableName, dbData,dbTables, errorMsg});
+    }
 });
 
 
@@ -105,10 +122,10 @@ app.post('/removeData', async (req, res) => {
     res.render('removeData', {pageTitle, dbData, dbDataHeaders} );
 });
 
-//return Json table data
+//return Json table data /student /student ?id=2&name=John /student/2
 app.get('/students', async (req, res) => {
     let sql = "";
-    const {id} = req.query;
+    const {id,john} = req.query;
     console.log(id);
     if(id){
         sql = `SELECT * FROM students WHERE id = ${id}`;
@@ -120,7 +137,9 @@ app.get('/students', async (req, res) => {
     res.json(dbData);
 });
 
-app.get('/plants/:id/:col', async (req, res) => {
+
+
+app.get('/plants/:id/:col/:name', async (req, res) => {
     let sql = `SELECT ${req.params.col} FROM plants WHERE id = ${req.params.id}`;
     const dbData = await db.query(sql);
     res.json(dbData);
