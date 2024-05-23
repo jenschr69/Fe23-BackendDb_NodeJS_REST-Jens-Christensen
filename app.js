@@ -137,8 +137,39 @@ app.get('/students', async (req, res) => {
     res.json(dbData);
 });
 
+//return Json table data /student /student ?id=2&name=John /student/2
+app.get('/addstudent', async (req, res) => {
+    let sql = "";
+    const {id,john} = req.query;
+    console.log(id);
+    if(id){
+        sql = `SELECT * FROM students WHERE id = ${id}`;
+    }else{
+        sql = `SELECT * FROM students`;
+    }
+    const dbData = await db.query(sql);
+    console.log(dbData);
+    res.json(dbData);
+});
+
+
 //return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
 app.get('/courses', async (req, res) => {
+    let sql = "";
+    const {id,john} = req.query;
+    console.log(id);
+    if(id){
+        sql = `SELECT * FROM courses WHERE id = ${id}`;
+    }else{
+        sql = `SELECT * FROM courses`;
+    }
+    const dbData = await db.query(sql);
+    console.log(dbData);
+    res.json(dbData);
+});
+
+//return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
+app.get('/addcourse', async (req, res) => {
     let sql = "";
     const {id,john} = req.query;
     console.log(id);
