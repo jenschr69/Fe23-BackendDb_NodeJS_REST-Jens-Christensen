@@ -18,6 +18,11 @@ li a{
     width: 60px;
     }
 
+nav > ul > li {
+    list-style-type: none;
+    display: inline;
+}
+
 #asideTable {
     display: block;
     border-style: solid;
@@ -45,3 +50,4 @@ li a{
     width: 75%;
     min-height: 200px;
 }
+
