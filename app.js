@@ -137,15 +137,20 @@ app.get('/students', async (req, res) => {
     res.json(dbData);
 });
 
-
-
-app.get('/plants/:id/:col/:name', async (req, res) => {
-    let sql = `SELECT ${req.params.col} FROM plants WHERE id = ${req.params.id}`;
+//return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
+app.get('/courses', async (req, res) => {
+    let sql = "";
+    const {id,john} = req.query;
+    console.log(id);
+    if(id){
+        sql = `SELECT * FROM courses WHERE id = ${id}`;
+    }else{
+        sql = `SELECT * FROM courses`;
+    }
     const dbData = await db.query(sql);
+    console.log(dbData);
     res.json(dbData);
 });
-
-
 
 //server configuration
 const port = 3000;
