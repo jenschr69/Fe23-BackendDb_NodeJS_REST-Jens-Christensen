@@ -1,4 +1,5 @@
 <% if(typeof dbData != 'undefined'){%>
+
     <form id="dataForm" action="/" method="POST">
         <table id="dataTable">
             <% if(dbData[0]){Object.keys(dbData[0]).forEach( header => {%>
