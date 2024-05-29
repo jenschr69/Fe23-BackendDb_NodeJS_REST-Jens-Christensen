@@ -122,8 +122,13 @@ app.post('/removeData', async (req, res) => {
     res.render('removeData', {pageTitle, dbData, dbDataHeaders} );
 });
 
-//return Json table data /student /student ?id=2&name=John /student/2
+// Skriver ut students till webbsidan
 app.get('/students', async (req, res) => {
+    //res.send("hello World");//serves index.html
+    const pageTitle = "Students";
+    const dbTables = await getTables();
+    let errorMsg = "";
+    let tableName = "select table";
     let sql = "";
     const {id,john} = req.query;
     console.log(id);
@@ -133,12 +138,12 @@ app.get('/students', async (req, res) => {
         sql = `SELECT * FROM students`;
     }
     const dbData = await db.query(sql);
-    console.log(dbData);
-    res.json(dbData);
+ 
+    res.render('students', {pageTitle,tableName, dbData, dbTables, errorMsg} );
 });
 
 //return Json table data /student /student ?id=2&name=John /student/2
-app.get('/addstudent', async (req, res) => {
+app.get('/api/students', async (req, res) => {
     let sql = "";
     const {id,john} = req.query;
     console.log(id);
@@ -152,9 +157,28 @@ app.get('/addstudent', async (req, res) => {
     res.json(dbData);
 });
 
-
-//return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
+// Printing out courses to the webpage
 app.get('/courses', async (req, res) => {
+    const pageTitle = "Courses";
+    const dbTables = await getTables();
+    let errorMsg = "";
+    let tableName = "select table";
+    let sql = "";
+    const {id,john} = req.query;
+    console.log(id);
+    if(id){
+        sql = `SELECT * FROM courses WHERE id = ${id}`;
+    }else{
+        sql = `SELECT * FROM courses`;
+    }
+    const dbData = await db.query(sql);
+ 
+    res.render('courses', {pageTitle,tableName, dbData, dbTables, errorMsg} );
+});
+
+//API route
+//return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
+app.get('/api/courses', async (req, res) => {
     let sql = "";
     const {id,john} = req.query;
     console.log(id);
@@ -168,8 +192,9 @@ app.get('/courses', async (req, res) => {
     res.json(dbData);
 });
 
-//return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
-app.get('/addcourse', async (req, res) => {
+//API route
+//return Json table data / courses/addcourse /courses ?id=2&name=HTML & CSS /course/2
+app.get('/api/courses/addcourse', async (req, res) => {
     let sql = "";
     const {id,john} = req.query;
     console.log(id);
@@ -181,6 +206,25 @@ app.get('/addcourse', async (req, res) => {
     const dbData = await db.query(sql);
     console.log(dbData);
     res.json(dbData);
+});
+
+// Skriver ut students fördelt på kurser till webbsidan
+app.get('/studentsbycourse', async (req, res) => {
+    const pageTitle = "Students by course";
+    const dbTables = await getTables();
+    let errorMsg = "";
+    let tableName = "select table";
+    let sql = "";
+    const {id,john} = req.query;
+    console.log(id);
+    if(id){
+        sql = `SELECT * FROM students_courses WHERE id = ${id}`;
+    }else{
+        sql = `SELECT * FROM students_courses`;
+    }
+    const dbData = await db.query(sql);
+ 
+    res.render('students_courses', {pageTitle, tableName, dbData, dbTables, errorMsg} );
 });
 
 //server configuration
