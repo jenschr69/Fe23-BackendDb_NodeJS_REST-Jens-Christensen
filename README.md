@@ -32,3 +32,5 @@ Alla kurstilmeldingar: /api/studentsbycourses
 Enkel kursanmälan: /api/studentsbycourses/"id"
 
 Resterande api uppgifter har jag tyvärr inte fått till att fungera.
+
+SQL databasfil ligger i mappen /sqldb.
