@@ -1,0 +1,19 @@
+Rapport Databas och Backend projekt Grit Academy databas - Jens Christensen
+
+GitRepo: https://github.com/jenschr69/Fe23-BackendDb_NodeJS_REST-Jens-Christensen
+
+Det svåraste med denna uppgiften har varit att sätta upp projektet från ett befintligt projekt.
+Detta har jag tagit ca. 60 % av tiden som jag har lagt på detta.
+
+Det var hyfsat enkelt att få till url endpoints'en for att skriva ut listor på studenter och kurser,
+och tillhörande API endpoints. Men, tyvärr har jag inte fått till att få till sökfält för att kunna
+söka på namn med vidare. Så detta fungerar inte vid inlämning d. 29.maj.
+
+Jag hade planerat att styla projektet med hjälp av Bootstrap 5, men har inte hunnit med detta.
+
+Det att jag inte har kunnat klara att lösa alla uppgifterna med SQL och styling, är pga. min egen
+begränsning pga. sjukdom som gör att jag inte har fått till att arbeta tillräckligt på projektet.
+
+Jens Christensen
+jens.christensen@gritacademy.se
+Mobil 070 486 2531
