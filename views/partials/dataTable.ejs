@@ -15,7 +15,12 @@
                         <% if(Object.values(row).length>0){ %>
                 <td>
                     <button type="submit" id="delRowBtn" name="delRowBtn" value="<%= tableName; %>,<%= row.id; %>">del</button>
-                </td>   
+                </td> 
+                <!--
+                <td>
+                    <button type="submit" id="updateRowBtn" name="updateRowBtn" value="<%= tableName; %>,<%= row.id; %>">update</button>  
+                </td>
+                -->
                         <% }; %> 
             </tr>
             <% }); %>

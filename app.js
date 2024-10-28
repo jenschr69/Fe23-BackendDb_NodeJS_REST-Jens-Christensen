@@ -67,7 +67,8 @@ app.post('/', async (req, res) => {
     if(req.body.delRowBtn){
         await db.query(`DELETE FROM ${req.body.delRowBtn.split(",")[0]} WHERE id=${req.body.delRowBtn.split(",")[1]}`);
     }
-
+    //
+    
     //show data
   
 
@@ -176,6 +177,7 @@ app.get('/courses', async (req, res) => {
     res.render('courses', {pageTitle,tableName, dbData, dbTables, errorMsg} );
 });
 
+
 //API route
 //return Json table data / courses /courses ?id=2&name=HTML & CSS /course/2
 app.get('/api/courses', async (req, res) => {
@@ -190,6 +192,24 @@ app.get('/api/courses', async (req, res) => {
     const dbData = await db.query(sql);
     console.log(dbData);
     res.json(dbData);
+});
+
+app.get('/courses/addcourse', async (req, res) => {
+    const pageTitle = "Add Course";
+    const dbTables = await getTables();
+    let errorMsg = "";
+    let tableName = "select table";
+    let sql = "";
+    const {id,john} = req.query;
+    console.log(id);
+    if(id){
+        sql = `SELECT * FROM courses WHERE id = ${id}`;
+    }else{
+        sql = `SELECT * FROM courses`;
+    }
+    const dbData = await db.query(sql);
+ 
+    res.render('addcourse', {pageTitle,tableName, dbData, dbTables, errorMsg} );
 });
 
 //API route
